@@ -15,6 +15,7 @@ Vibration Indicator: This feature combines rotational speed and torque to repres
 Tool Wear Level: By categorizing tool wear into 'Low Wear,' 'Medium Wear,' and 'High Wear,' I simplified this variable, making it more interpretable while retaining its predictive relevance.
 
 Through this process, I observed that these new features improved the model’s understanding of complex mechanical and thermal stresses, which are key indicators of equipment health.
+
 2. Model Selection and Performance Comparison
 
 I evaluated multiple models to find the one most capable of accurately predicting failures:
