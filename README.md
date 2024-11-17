@@ -1,81 +1,66 @@
 # Predictive_Maintenance_Project_Summary
+
 Predictive Maintenance Project Summary
-Here’s a comprehensive summary of my results, key findings, and insights from the predictive maintenance project using the AI4I 2020 Predictive Maintenance Dataset from the UC Irvine – Machine Learning Repository.
+Here’s a detailed summary of my results, key findings, and insights from the predictive maintenance project using the AI4I 2020 Predictive Maintenance Dataset from the UC Irvine Machine Learning Repository.
 Project Overview
-My goal was to develop a predictive maintenance model capable of accurately predicting equipment failures, allowing for timely interventions to prevent unplanned downtime. Using the ai4i_2020 dataset, which includes features such as sensor readings and operational metrics, I followed a structured approach from data preprocessing to model deployment.
-1. Data Preprocessing and Feature Engineering
-Data Cleaning: After confirming there were no missing values, I capped outliers at the 99th percentile in critical features like `Rotational Speed [rpm]` and `Torque [Nm]`.
+In this project, I aimed to develop a predictive maintenance model to proactively detect equipment failures, thereby reducing unplanned downtime and enhancing operational efficiency. I used the AI4I 2020 Predictive Maintenance Dataset from the UC Irvine Machine Learning Repository, which provided machine sensor readings and operational metrics relevant to failure prediction.
+My approach included systematic steps: data cleaning, feature engineering, model selection and evaluation, hyperparameter tuning, and deployment for real-time monitoring. By iterating through each step, I refined the model to maximize its reliability in identifying potential failures.
 
-Feature Engineering: I created new features to capture key aspects of equipment behavior:
+1. Data Cleaning and Feature Engineering
+Data Cleaning: I first ensured the data was clean and free from missing values. Recognizing that extreme values in features like `Rotational Speed [rpm]` and `Torque [Nm]` could introduce noise, I applied a 99th percentile cap on outliers. This capping was critical to ensure that my model focused on generalizable patterns rather than rare anomalies.
 
-Temperature Delta: This feature represents the difference between process and air temperature, highlighting potential overheating issues.
+Feature Engineering: To enhance the model’s predictive power, I engineered several features:
+Temperature Delta: Calculated as the difference between process and air temperature, this feature captures overheating potential, a known precursor to failure.
+Vibration Indicator: This feature combines rotational speed and torque to represent machine vibration, which reflects mechanical stress that can wear down equipment.
+Tool Wear Level: By categorizing tool wear into 'Low Wear,' 'Medium Wear,' and 'High Wear,' I simplified this variable, making it more interpretable while retaining its predictive relevance.
 
-Vibration Indicator: A proxy for vibration levels, combining rotational speed and torque, which are often associated with mechanical stress.
+Through this process, I observed that these new features improved the model’s understanding of complex mechanical and thermal stresses, which are key indicators of equipment health.
+3. Model Selection and Performance Comparison
 
-Tool Wear Level: I categorized tool wear into 'Low Wear,' 'Medium Wear,' and 'High Wear' to simplify analysis and improve model interpretability.
+I evaluated multiple models to find the one most capable of accurately predicting failures:
+Logistic Regression: This model yielded an F1 score of 0.214, indicating limited ability to capture failure cases in an imbalanced dataset.
+Random Forest and Gradient Boosting: Both models performed considerably better, with cross-validated F1 scores of 0.734 and 0.731, respectively.
+LightGBM: This model was the top performer with an F1 score of 0.69, balancing precision and recall effectively, and a recall rate of 82%.
 
-Insight: These engineered features provided additional context for the model, emphasizing patterns of thermal and mechanical stress, which are critical indicators of failure.
+Insight: The results showed that while ensemble models like Random Forest and Gradient Boosting had strong performance, LightGBM offered the best balance of recall and precision, making it ideal for minimizing false negatives in a maintenance context.
 
-2. Model Selection and Performance Comparison
-I tested several models, including Logistic Regression, Random Forest, Gradient Boosting, and LightGBM. The cross-validated F1 scores for each model were as follows:
+4. Feature Importance Analysis
+   
+Using the Random Forest model, I explored feature importance to understand which variables most impacted failure predictions. This analysis highlighted:
+Vibration Indicator: Ranked as the most important feature, it underscored the role of mechanical stress in equipment failure.
+Temperature Delta: Also highly influential, indicating that temperature fluctuations contribute to stress.
+Torque: Reflects operational force, suggesting that load-related stresses impact machine longevity.
 
-Logistic Regression:  Accuracy - 97.05%  Precision - 58.33%  F1 Score - 0.214
+Insight: This feature importance analysis validated that mechanical and thermal stress markers were essential indicators of failure risk, helping guide operational monitoring.
 
-Random Forest:        Accuracy - 98.30%  Precision - 75.47%  F1 Score - 0.734
+5. Precision-Recall Analysis and Confusion Matrix Insights
+Precision-Recall Curve: The curve illustrated the balance between precision (minimizing false positives) and recall (minimizing false negatives). I achieved a balance that captured most failures without significantly inflating false alerts.
 
-Gradient Boosting:   	Accuracy - 98.20%  Precision - 73.58%  F1 Score - 0.731
+Confusion Matrix: Provided an in-depth look at the model’s performance in detecting failures and avoiding false positives:
+True Positives (TP): Correctly predicted failures, enabling proactive maintenance.
+False Positives (FP): Non-failures predicted as failures, acceptable to prevent downtimes.
+True Negatives (TN): Accurate predictions of non-failures, reducing unnecessary checks.
+False Negatives (FN): Missed failures, which are critical to minimize.
 
-LightGBM (Best):      Accuracy - 97.00%  Precision - 59.00%  F1 Score - 0.69
+Insight: The model achieved a high recall (82%) with reasonable precision (59%), ensuring that most failures were detected while avoiding an excessive false alarm rate.
 
-Among these, LightGBM was the best-performing model, with a high recall (82%) and reasonable precision (59%). It outperformed other models in identifying true failures while maintaining a balance with false positives.
+6. Hyperparameter Tuning and Final Model Selection
+Using GridSearchCV, I optimized LightGBM’s parameters (`num_leaves`, `max_depth`, `learning_rate`, and `n_estimators`), enhancing its accuracy and reliability. The final tuned LightGBM model showed robust reliability in both recall and precision, solidifying it as the most suitable model for this project.
 
-Insight: LightGBM was the most suitable model for predicting failures, as it achieved the best recall without excessive false positives. This high recall is crucial in predictive maintenance, as it ensures that potential failures are captured, reducing unplanned downtime.
+Insight: Hyperparameter tuning allowed LightGBM to better capture complex, subtle failure patterns. This adjustment enhanced recall and precision, aligning the model with the practical demands of predictive maintenance.
 
-3. Feature Importance Analysis
-Using the Random Forest model, I analyzed feature importance to understand which variables were most influential in predicting equipment failures. The 'Feature Importance in Random Forest Model' chart highlights the top contributing features:
+8. Deployment for Real-Time Monitoring and Alerting
+Using FastAPI, I deployed the model as a REST API endpoint that accepts real-time sensor data and returns predictions. The API generates alerts if a failure is likely, allowing maintenance teams to take preemptive action.
 
-Vibration Indicator: A strong indicator of potential failure due to mechanical stress.
-
-Temperature Delta: Highlights the role of overheating in equipment failure.
-
-Torque: Captures operational force applied, which can increase wear and lead to breakdowns.
-
-Insight: These insights validated that vibration, thermal stress, and torque were the primary drivers of failure. Monitoring these features can help prioritize maintenance and operational checks on at-risk equipment.
-
-4. Precision-Recall Analysis and Confusion Matrix Insights
-Precision-Recall Curve: This curve showed the trade-off between precision and recall, confirming that a balanced threshold allows for high recall while managing false positives.
-
-Confusion Matrix: The matrix showed high true positive and true negative rates, with limited false positives and few false negatives.
-
-True Positives (TP): Detected failures, allowing for proactive maintenance.
-
-False Positives (FP): Non-failures predicted as failures, which can trigger preventive checks but don’t lead to downtime.
-
-True Negatives (TN): Correctly identified non-failures, ensuring no unnecessary alerts.
-
-False Negatives (FN): Missed failures, which could lead to unplanned downtime but were minimized by the model.
-
-Insight: By optimizing recall, I minimized missed failures while maintaining reasonable precision. This setup is valuable in a maintenance context where identifying most failures is crucial.
-
-5. Hyperparameter Tuning and Final Model Selection
-Hyperparameter Tuning: Using GridSearchCV, I optimized LightGBM’s parameters (num_leaves, max_depth, learning_rate, and n_estimators), enhancing its accuracy and reliability. The final model achieved a strong F1-score, indicating robust performance on the minority (failure) class.
-
-Insight: Hyperparameter tuning helped fine-tune the model’s ability to detect subtle failure patterns, improving both recall and precision for failure predictions.
-
-6. Deployment for Real-Time Monitoring and Alerting
-Deployment Setup: Using FastAPI, I created an endpoint that allows the model to make real-time predictions based on incoming sensor data. The model returns alerts if a failure is predicted, enabling preemptive maintenance.
-
-Monitoring and Alerting: The API setup allows for continuous monitoring, where predictions can trigger alerts that maintenance teams can use to address issues proactively.
-Insight: The deployment setup provides real-time visibility into equipment health, allowing maintenance teams to act on potential issues before they result in downtime. This setup enhances operational efficiency and minimizes unexpected maintenance costs.
+Insight: Real-time deployment transforms the model into a proactive monitoring system. By continuously analyzing incoming data and generating alerts, the system enables teams to prevent failures, enhance equipment longevity, and reduce unexpected downtimes.
 
 Overall Project Summary and Key Takeaways
+Critical Indicators of Failure: Features related to mechanical and thermal stress—especially vibration, temperature differences, and torque—are primary predictors of failure. These should be continuously monitored for early signs of wear.
 
-Thermal and Mechanical Stress as Key Drivers: Features related to vibration, temperature, and torque are primary predictors of failure, highlighting critical areas for operational monitoring.
+Model Selection: LightGBM’s performance and adaptability to imbalanced data made it the most suitable choice, especially after tuning. It achieved a strong recall, ensuring that most failure cases are detected.
 
-Model Selection: LightGBM was the best-performing model, especially after tuning, offering a high recall that ensures most failures are detected.
+Balance of Precision and Recall: By optimizing for recall, I minimized missed failures, addressing a primary concern in predictive maintenance.
 
-Precision-Recall Balance: The model’s configuration allows for a balance between high recall and manageable precision, minimizing both missed failures and excessive false alarms.
+Real-Time Predictive Maintenance: The FastAPI deployment enables the model to provide continuous, actionable insights, empowering maintenance teams to act on failure predictions before breakdowns occur.
 
-Real-Time Deployment for Proactive Maintenance: The API deployment enables continuous monitoring, allowing for timely alerts and actions to prevent unexpected downtimes.
-
-This predictive maintenance model demonstrates a comprehensive approach to minimizing equipment failures, combining accurate failure prediction with real-time monitoring to support efficient and proactive maintenance strategies.
+This project demonstrates the potential of machine learning in proactive maintenance, combining feature engineering, robust modeling, and deployment for real-time monitoring. The predictive maintenance model developed here allows maintenance teams to take data-driven actions that prevent equipment failures, optimize resource allocation, and ultimately improve operational efficiency.
