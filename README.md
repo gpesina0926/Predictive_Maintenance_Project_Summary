@@ -15,7 +15,7 @@ Vibration Indicator: This feature combines rotational speed and torque to repres
 Tool Wear Level: By categorizing tool wear into 'Low Wear,' 'Medium Wear,' and 'High Wear,' I simplified this variable, making it more interpretable while retaining its predictive relevance.
 
 Through this process, I observed that these new features improved the model’s understanding of complex mechanical and thermal stresses, which are key indicators of equipment health.
-3. Model Selection and Performance Comparison
+2. Model Selection and Performance Comparison
 
 I evaluated multiple models to find the one most capable of accurately predicting failures:
 Logistic Regression: This model yielded an F1 score of 0.214, indicating limited ability to capture failure cases in an imbalanced dataset.
@@ -24,7 +24,7 @@ LightGBM: This model was the top performer with an F1 score of 0.69, balancing p
 
 Insight: The results showed that while ensemble models like Random Forest and Gradient Boosting had strong performance, LightGBM offered the best balance of recall and precision, making it ideal for minimizing false negatives in a maintenance context.
 
-4. Feature Importance Analysis
+3. Feature Importance Analysis
    
 Using the Random Forest model, I explored feature importance to understand which variables most impacted failure predictions. This analysis highlighted:
 Vibration Indicator: Ranked as the most important feature, it underscored the role of mechanical stress in equipment failure.
@@ -33,7 +33,7 @@ Torque: Reflects operational force, suggesting that load-related stresses impact
 
 Insight: This feature importance analysis validated that mechanical and thermal stress markers were essential indicators of failure risk, helping guide operational monitoring.
 
-5. Precision-Recall Analysis and Confusion Matrix Insights
+4. Precision-Recall Analysis and Confusion Matrix Insights
 Precision-Recall Curve: The curve illustrated the balance between precision (minimizing false positives) and recall (minimizing false negatives). I achieved a balance that captured most failures without significantly inflating false alerts.
 
 Confusion Matrix: Provided an in-depth look at the model’s performance in detecting failures and avoiding false positives:
@@ -44,12 +44,12 @@ False Negatives (FN): Missed failures, which are critical to minimize.
 
 Insight: The model achieved a high recall (82%) with reasonable precision (59%), ensuring that most failures were detected while avoiding an excessive false alarm rate.
 
-6. Hyperparameter Tuning and Final Model Selection
+5. Hyperparameter Tuning and Final Model Selection
 Using GridSearchCV, I optimized LightGBM’s parameters (`num_leaves`, `max_depth`, `learning_rate`, and `n_estimators`), enhancing its accuracy and reliability. The final tuned LightGBM model showed robust reliability in both recall and precision, solidifying it as the most suitable model for this project.
 
 Insight: Hyperparameter tuning allowed LightGBM to better capture complex, subtle failure patterns. This adjustment enhanced recall and precision, aligning the model with the practical demands of predictive maintenance.
 
-8. Deployment for Real-Time Monitoring and Alerting
+6. Deployment for Real-Time Monitoring and Alerting
 Using FastAPI, I deployed the model as a REST API endpoint that accepts real-time sensor data and returns predictions. The API generates alerts if a failure is likely, allowing maintenance teams to take preemptive action.
 
 Insight: Real-time deployment transforms the model into a proactive monitoring system. By continuously analyzing incoming data and generating alerts, the system enables teams to prevent failures, enhance equipment longevity, and reduce unexpected downtimes.
