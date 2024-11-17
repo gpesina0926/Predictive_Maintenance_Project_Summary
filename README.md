@@ -19,11 +19,13 @@ Insight: These engineered features provided additional context for the model, em
 2. Model Selection and Performance Comparison
 I tested several models, including Logistic Regression, Random Forest, Gradient Boosting, and LightGBM. The cross-validated F1 scores for each model were as follows:
 
-Logistic Regression: 0.214
+Logistic Regression:  Accuracy - 97.05%  Precision - 58.33%  F1 Score - 0.214
 
-Random Forest: 0.734
+Random Forest:        Accuracy - 98.30%  Precision - 75.47%  F1 Score - 0.734
 
-Gradient Boosting: 0.731
+Gradient Boosting:   	Accuracy - 98.20%  Precision - 73.58%  F1 Score - 0.731
+
+LightGBM (Best):      Accuracy - 97.00%  Precision - 59.00%  F1 Score - 0.69
 
 Among these, LightGBM was the best-performing model, with a high recall (82%) and reasonable precision (59%). It outperformed other models in identifying true failures while maintaining a balance with false positives.
 
