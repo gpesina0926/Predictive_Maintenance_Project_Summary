@@ -3,14 +3,15 @@ Predictive Maintenance Project Summary
 Here’s a comprehensive summary of my results, key findings, and insights from the predictive maintenance project using the AI4I 2020 Predictive Maintenance Dataset from the UC Irvine – Machine Learning Repository.
 Project Overview
 My goal was to develop a predictive maintenance model capable of accurately predicting equipment failures, allowing for timely interventions to prevent unplanned downtime. Using the ai4i_2020 dataset, which includes features such as sensor readings and operational metrics, I followed a structured approach from data preprocessing to model deployment.
-
 1. Data Preprocessing and Feature Engineering
 Data Cleaning: After confirming there were no missing values, I capped outliers at the 99th percentile in critical features like `Rotational Speed [rpm]` and `Torque [Nm]`.
 
 Feature Engineering: I created new features to capture key aspects of equipment behavior:
 
 •	• Temperature Delta: This feature represents the difference between process and air temperature, highlighting potential overheating issues.
+
 •	• Vibration Indicator: A proxy for vibration levels, combining rotational speed and torque, which are often associated with mechanical stress.
+
 •	• Tool Wear Level: I categorized tool wear into 'Low Wear,' 'Medium Wear,' and 'High Wear' to simplify analysis and improve model interpretability.
 
 Insight: These engineered features provided additional context for the model, emphasizing patterns of thermal and mechanical stress, which are critical indicators of failure.
