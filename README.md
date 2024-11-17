@@ -60,7 +60,7 @@ Hyperparameter Tuning: Using GridSearchCV, I optimized LightGBM’s parameters (
 
 Insight: Hyperparameter tuning helped fine-tune the model’s ability to detect subtle failure patterns, improving both recall and precision for failure predictions.
 
-7. Deployment for Real-Time Monitoring and Alerting
+6. Deployment for Real-Time Monitoring and Alerting
 Deployment Setup: Using FastAPI, I created an endpoint that allows the model to make real-time predictions based on incoming sensor data. The model returns alerts if a failure is predicted, enabling preemptive maintenance.
 
 Monitoring and Alerting: The API setup allows for continuous monitoring, where predictions can trigger alerts that maintenance teams can use to address issues proactively.
